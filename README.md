@@ -1,5 +1,13 @@
 # ToDo
 
+Dependencies list:
+ - Angular @18.0.1
+ - TaigaUI @3.89.0
+ - NgRx @18.0.2
+ - Eslint @8.2.0 (devMode)
+ - Prettier @3.3.3 (devMode)
+ - Stylelint @16.8.1 (devMode)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.3.
 
 ## Development server
