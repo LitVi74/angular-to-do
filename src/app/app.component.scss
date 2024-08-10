@@ -1,0 +1,10 @@
+.app {
+  display: flex;
+  flex-direction: column;
+
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem 12.5rem .75rem;
+
+  scrollbar-gutter: stable;
+}
