@@ -1,23 +1,22 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { TuiRootModule } from '@taiga-ui/core';
+import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 import {
   ApplicationConfig,
   provideZoneChangeDetection,
-  importProvidersFrom,
   isDevMode,
+  enableProdMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { routes } from './app.routes';
 import { todosFactory } from './reducers/todos';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideStore({
-      [todosFactory.name]: todosFactory.reducer,
-    }),
+    provideStore(),
+    provideState(todosFactory),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -28,7 +27,8 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    importProvidersFrom(TuiRootModule),
+    provideAnimations(),
+    NG_EVENT_PLUGINS,
     provideStore(),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],

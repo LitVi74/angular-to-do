@@ -1,18 +1,19 @@
-import { createFeature, createReducer } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { todosPageActions } from './todos.actions';
 
 const TODOS_FACTORY_KEY = 'todos';
 
-export interface TodosState {
+export interface ITodo {
   id: number;
   title: string;
   checked: boolean;
 }
 
-export interface State {
-  todos: TodosState[];
+export interface TodosState {
+  todos: ITodo[];
 }
 
-const initialState: State = {
+const initialState: TodosState = {
   todos: [
     {
       id: 1,
@@ -24,5 +25,11 @@ const initialState: State = {
 
 export const todosFactory = createFeature({
   name: TODOS_FACTORY_KEY,
-  reducer: createReducer(initialState),
+  reducer: createReducer(
+    initialState,
+    on(todosPageActions.addNewTodo, (state: TodosState, { title }) => ({
+      ...state,
+      todos: [...state.todos, { id: 2, title, checked: false }],
+    })),
+  ),
 });

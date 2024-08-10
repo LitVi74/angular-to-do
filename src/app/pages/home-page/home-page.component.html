@@ -1,0 +1,12 @@
+<form [formGroup]="testForm">
+  <tui-input formControlName="testValue">
+    Поиск
+    <input tuiTextfieldLegacy />
+  </tui-input>
+  <button tuiButton iconStart="@tui.plus">Новая задача</button>
+</form>
+<section>
+  @for (todo of todos$ | async; track todo.id) {
+    <app-todo-card [todo]="todo" />
+  }
+</section>
