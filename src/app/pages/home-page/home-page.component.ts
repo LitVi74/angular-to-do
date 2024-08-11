@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { TuiInputModule } from '@taiga-ui/legacy';
+import { TuiInputModule, TuiSelectModule } from '@taiga-ui/legacy';
 import { FormsModule } from '@angular/forms';
 import { TuiButton, TuiDialogService } from '@taiga-ui/core';
 import { Store } from '@ngrx/store';
@@ -11,21 +11,44 @@ import { TodoCardComponent } from './components/todo-card/todo-card.component';
 import { TodoModalComponent } from './modals/todo-modal/todo-modal.component';
 import { ITodo } from '../../reducers/todos/todos.reducer';
 
+class Sorter {
+  constructor(
+    public readonly todoKey: keyof ITodo,
+    public readonly isAscending: boolean,
+    public readonly text: string,
+  ) {}
+}
+
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [TuiInputModule, TuiButton, AsyncPipe, TodoCardComponent, FormsModule],
+  imports: [TuiInputModule, TuiButton, AsyncPipe, TodoCardComponent, FormsModule, TuiSelectModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent {
   private readonly dialogs = inject(TuiDialogService);
   private readonly store = inject(Store);
+  sorters = [
+    new Sorter('id', true, 'Сначала старые'),
+    new Sorter('id', false, 'Сначала новые'),
+    new Sorter('title', true, 'От А до Я'),
+    new Sorter('title', false, 'От Я до А'),
+    new Sorter('checked', false, 'Сначала готовые'),
+    new Sorter('checked', true, 'Сначала неготовые'),
+  ];
+  sorterValue = new BehaviorSubject(this.sorters[0]);
   searchValue = new BehaviorSubject<string>('');
-  todos$ = combineLatest<[ITodo[], string]>([
+  todos$ = combineLatest<[ITodo[], string, Sorter]>([
     this.store.select(selectAllTodos),
     this.searchValue,
-  ]).pipe(map(([todos, search]) => this.searchTodo(todos, search)));
+    this.sorterValue,
+  ]).pipe(
+    map(([todos, search, sorter]) => {
+      const searchedTodos = this.searchTodo(todos, search);
+      return this.sortTodo(searchedTodos, sorter);
+    }),
+  );
 
   searchTodo(todos: ITodo[], search: string) {
     if (!search.trim()) {
@@ -33,6 +56,19 @@ export class HomePageComponent {
     }
 
     return todos.filter(({ title }) => title.toLowerCase().includes(search.trim().toLowerCase()));
+  }
+
+  sortTodo(todos: ITodo[], sorter: Sorter) {
+    return [...todos].sort((a, b) => {
+      if (a[sorter.todoKey] < b[sorter.todoKey]) {
+        return sorter.isAscending ? -1 : 1;
+      }
+      if (a[sorter.todoKey] > b[sorter.todoKey]) {
+        return sorter.isAscending ? 1 : -1;
+      }
+
+      return 0;
+    });
   }
 
   openTodoModal(todo?: ITodo) {
@@ -63,5 +99,9 @@ export class HomePageComponent {
 
   handleSearchUpdate(value: string) {
     this.searchValue.next(value);
+  }
+
+  handleSorderUpdate(value: Sorter) {
+    this.sorterValue.next(value);
   }
 }

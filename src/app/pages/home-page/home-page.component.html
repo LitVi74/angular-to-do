@@ -8,6 +8,20 @@
     Поиск
     <input tuiTextfieldLegacy/>
   </tui-input>
+  <tui-select
+    class="home-filters__sorter"
+    [valueContent]="sorterContent"
+    [ngModel]="sorterValue | async"
+    (ngModelChange)="handleSorderUpdate($event)"
+    [ngModelOptions]="{standalone: true}"
+  >
+    Сортировка
+    <tui-data-list-wrapper
+      *tuiDataList
+      [itemContent]="sorterContent"
+      [items]="sorters"
+    />
+  </tui-select>
   <button
     tuiButton
     type="button"
@@ -26,3 +40,12 @@
     />
   }
 </section>
+
+<ng-template
+  #sorterContent
+  let-sorter
+>
+  <div class="account">
+    {{ sorter.text }}
+  </div>
+</ng-template>
