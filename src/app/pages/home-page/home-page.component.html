@@ -1,13 +1,16 @@
-<form [formGroup]="testForm" class="home-filters">
+<form class="home-filters">
   <tui-input
-    formControlName="testValue"
     class="home-filters__search"
+    [ngModel]="searchValue | async"
+    (ngModelChange)="handleSearchUpdate($event)"
+    [ngModelOptions]="{standalone: true}"
   >
     Поиск
     <input tuiTextfieldLegacy/>
   </tui-input>
   <button
     tuiButton
+    type="button"
     iconStart="@tui.plus"
     (click)="openTodoModal()"
   >Новая задача
