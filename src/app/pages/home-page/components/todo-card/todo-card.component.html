@@ -13,7 +13,12 @@
     {{ todo.title }}
   </h2>
   <div class="todo-card__buttons">
-    <button tuiIconButton title="Редактировать" iconStart="@tui.pencil"></button>
+    <button
+      tuiIconButton
+      title="Редактировать"
+      iconStart="@tui.pencil"
+      (click)="handleEditButtonClick()"
+    ></button>
     <button tuiIconButton appearance="accent" title="Удалить" iconStart="@tui.trash-2"></button>
   </div>
 </div>

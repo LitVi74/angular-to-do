@@ -1,0 +1,14 @@
+<section class="todo-modal">
+  <tui-input
+    [(ngModel)]="todoTitle"
+  >
+    Название
+  </tui-input>
+  <button
+    tuiButton
+    class="todo-modal__button"
+    (click)="closeModalAndSave()"
+  >
+    Сохранить
+  </button>
+</section>

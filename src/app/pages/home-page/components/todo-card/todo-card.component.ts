@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import { TuiButton, TuiSurface, TuiTitle } from '@taiga-ui/core';
 import { TuiCheckbox } from '@taiga-ui/kit';
@@ -14,4 +14,9 @@ import { ITodo } from '../../../../reducers/todos/todos.reducer';
 })
 export class TodoCardComponent {
   @Input({ required: true }) todo!: ITodo;
+  @Output() edit = new EventEmitter<ITodo>();
+
+  handleEditButtonClick() {
+    this.edit.emit(this.todo);
+  }
 }

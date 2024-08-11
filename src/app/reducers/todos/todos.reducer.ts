@@ -27,9 +27,31 @@ export const todosFactory = createFeature({
   name: TODOS_FACTORY_KEY,
   reducer: createReducer(
     initialState,
-    on(todosPageActions.addNewTodo, (state: TodosState, { title }) => ({
-      ...state,
-      todos: [...state.todos, { id: 2, title, checked: false }],
-    })),
+    on(todosPageActions.addNewTodo, (state: TodosState, { title }) => {
+      const maxId = Math.max(...state.todos.map(({ id }) => id));
+
+      return {
+        ...state,
+        todos: [...state.todos, { id: maxId + 1, title, checked: false }],
+      };
+    }),
+    on(todosPageActions.editTodoTitle, (state: TodosState, { id, title }) => {
+      const todos = state.todos.map((todo) => {
+        if (todo.id !== id) {
+          return todo;
+        }
+
+        return {
+          id,
+          title,
+          checked: todo.checked,
+        } as ITodo;
+      });
+
+      return {
+        ...state,
+        todos,
+      };
+    }),
   ),
 });
