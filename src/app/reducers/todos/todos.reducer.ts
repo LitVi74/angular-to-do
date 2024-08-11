@@ -53,5 +53,13 @@ export const todosFactory = createFeature({
         todos,
       };
     }),
+    on(todosPageActions.deleteTodo, (state, { id }) => {
+      const todos = state.todos.filter((todo) => todo.id !== id);
+
+      return {
+        ...state,
+        todos,
+      };
+    }),
   ),
 });

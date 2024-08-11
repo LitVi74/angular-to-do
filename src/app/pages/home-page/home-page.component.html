@@ -14,6 +14,6 @@
 </form>
 <section class="home-content">
   @for (todo of todos$ | async; track todo.id) {
-    <app-todo-card [todo]="todo" (edit)="openTodoModal($event)" />
+    <app-todo-card [todo]="todo" (edit)="openTodoModal($event)" (delete)="handleDeleteTodo($event)" />
   }
 </section>

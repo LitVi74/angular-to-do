@@ -5,5 +5,6 @@ export const todosPageActions = createActionGroup({
   events: {
     addNewTodo: props<{ title: string }>(),
     editTodoTitle: props<{ id: number; title: string }>(),
+    deleteTodo: props<{ id: number }>(),
   },
 });

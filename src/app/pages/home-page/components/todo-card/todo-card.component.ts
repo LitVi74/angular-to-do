@@ -15,8 +15,13 @@ import { ITodo } from '../../../../reducers/todos/todos.reducer';
 export class TodoCardComponent {
   @Input({ required: true }) todo!: ITodo;
   @Output() edit = new EventEmitter<ITodo>();
+  @Output() delete = new EventEmitter<number>();
 
   handleEditButtonClick() {
     this.edit.emit(this.todo);
+  }
+
+  handleDeleteButtonClick() {
+    this.delete.emit(this.todo.id);
   }
 }

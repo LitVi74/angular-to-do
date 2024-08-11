@@ -49,4 +49,8 @@ export class HomePageComponent {
         }
       });
   }
+
+  handleDeleteTodo(todoId: number) {
+    this.store.dispatch(todosPageActions.deleteTodo({ id: todoId }));
+  }
 }
