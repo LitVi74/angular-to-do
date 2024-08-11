@@ -4,7 +4,7 @@
 
   width: 100vw;
   height: 100vh;
-  padding: 2rem 12.5rem .75rem;
+  padding: 2rem min(12.5rem, 12vw) .75rem;
 
   scrollbar-gutter: stable;
 }
