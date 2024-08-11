@@ -1,0 +1,9 @@
+.todo-card {
+  gap: 0.5rem;
+  align-items: center;
+
+  &__buttons {
+    display: flex;
+    gap: 0.25rem;
+  }
+}

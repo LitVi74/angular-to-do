@@ -1,1 +1,19 @@
-<p>{{  todo.title  }}</p>
+<div
+  class="todo-card"
+  tuiCardLarge
+  tuiHeader
+  tuiSurface="elevated"
+>
+  <input
+    tuiCheckbox
+    type="checkbox"
+    [ngModel]="todo.checked"
+  />
+  <h2 tuiTitle>
+    {{ todo.title }}
+  </h2>
+  <div class="todo-card__buttons">
+    <button tuiIconButton title="Редактировать" iconStart="@tui.pencil"></button>
+    <button tuiIconButton appearance="accent" title="Удалить" iconStart="@tui.trash-2"></button>
+  </div>
+</div>
