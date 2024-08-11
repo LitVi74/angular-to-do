@@ -1,9 +1,22 @@
+@import '@taiga-ui/legacy/styles/taiga-ui-local';
+
 .todo-card {
   gap: 0.5rem;
   align-items: center;
+  box-shadow: var(--tui-shadow-small);
+  background-color: var(--tui-background-elevation-1);
+  @include transition(all);
 
   &__buttons {
     display: flex;
     gap: 0.25rem;
+  }
+
+  &_done {
+    background-color: var(--tui-status-positive-pale-hover);
+  }
+
+  &_not-ready {
+    background-color: var(--tui-background-elevation-1);
   }
 }

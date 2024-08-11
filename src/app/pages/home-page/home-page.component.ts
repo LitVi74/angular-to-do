@@ -53,4 +53,8 @@ export class HomePageComponent {
   handleDeleteTodo(todoId: number) {
     this.store.dispatch(todosPageActions.deleteTodo({ id: todoId }));
   }
+
+  handleTodoDone(todoId: number, done: boolean) {
+    this.store.dispatch(todosPageActions.editTodoChecked({ id: todoId, checked: done }));
+  }
 }

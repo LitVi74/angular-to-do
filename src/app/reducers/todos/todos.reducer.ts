@@ -27,7 +27,7 @@ export const todosFactory = createFeature({
   name: TODOS_FACTORY_KEY,
   reducer: createReducer(
     initialState,
-    on(todosPageActions.addNewTodo, (state: TodosState, { title }) => {
+    on(todosPageActions.addNewTodo, (state, { title }) => {
       const maxId = Math.max(...state.todos.map(({ id }) => id));
 
       return {
@@ -35,7 +35,7 @@ export const todosFactory = createFeature({
         todos: [...state.todos, { id: maxId + 1, title, checked: false }],
       };
     }),
-    on(todosPageActions.editTodoTitle, (state: TodosState, { id, title }) => {
+    on(todosPageActions.editTodoTitle, (state, { id, title }) => {
       const todos = state.todos.map((todo) => {
         if (todo.id !== id) {
           return todo;
@@ -45,6 +45,24 @@ export const todosFactory = createFeature({
           id,
           title,
           checked: todo.checked,
+        } as ITodo;
+      });
+
+      return {
+        ...state,
+        todos,
+      };
+    }),
+    on(todosPageActions.editTodoChecked, (state, { id, checked }) => {
+      const todos = state.todos.map((todo) => {
+        if (todo.id !== id) {
+          return todo;
+        }
+
+        return {
+          id,
+          title: todo.title,
+          checked,
         } as ITodo;
       });
 

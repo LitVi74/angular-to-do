@@ -2,12 +2,16 @@
   class="todo-card"
   tuiCardLarge
   tuiHeader
-  tuiSurface="elevated"
+  [ngClass]="{
+    'todo-card_done': todo.checked,
+    'todo-card_not-ready': !todo.checked,
+  }"
 >
   <input
     tuiCheckbox
     type="checkbox"
     [ngModel]="todo.checked"
+    (ngModelChange)="handleCheckedEdit($event)"
   />
   <h2 tuiTitle>
     {{ todo.title }}
